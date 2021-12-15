@@ -58,3 +58,19 @@ def run_eda_app() :
         st.text('최소값')
         # 선택한 컬럼의 최대값에 해당하는 사람의 데이터 출력
         st.dataframe(df.loc[df[selected_maxmin]==df[selected_maxmin].min(),])
+
+    # 고객의 이름을 검색할 수 있는 기능 개발
+    # 1. 유저한테 검색어 입력 받기
+    st.subheader('사람검색')
+    word = st.text_input('이름을 검색하세요')
+
+    # 1-1 검색을 위해 다 소문자로 바꾸기
+    word = word.lower()
+
+    # 2. 검색어를 데이터프레임의 Customer Name 컬럼에서 검색해서 가져오기
+    # pandas.Series.str.contains : 문자열 포함 확인
+    df.loc[df['Customer Name'].str.lower().str.contains(word),]
+
+    # 3. 화면에 결과 보이기
+    st.dataframe( df.loc[df['Customer Name'].str.lower().str.contains(word),])
+    
